@@ -31,6 +31,7 @@ function handleInput(e){
         value = e.key
         target = document.querySelector(`[data-value="${value}"]`)
     }
+	makeActive(target)
     if(!validateInput(value)) return
     if (enterKeys.includes(value)) return inputEqual();
 	if (clearKeys.includes(value)) return inputClear();
@@ -152,3 +153,19 @@ function validateInput(value){
     if(value === "clear" || value === "Backspace" || value === "Escape") return true
     return false
 }
+
+function randomizeColor(){
+    const rndVal = ()=> Math.floor(Math.random() * 220) 
+	const r = rndVal()
+	const g = rndVal()
+	const b = rndVal()
+	const color = `${r}, ${g}, ${b}`
+	const element = document.querySelector(':root')
+	console.log("before: ", getComputedStyle(element).getPropertyValue('--color-main'))
+	element.style.setProperty('--color-main', `rgb(${color})`)
+	console.log("after: ", getComputedStyle(element).getPropertyValue('--color-main'))
+
+
+   
+}
+randomizeColor()
