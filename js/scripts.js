@@ -21,6 +21,7 @@ document.addEventListener("keyup", handleInput);
 
 // Click handler
 function handleInput(e){
+	console.log(e)
     let value = ""
     let target = ""
     if(e.type === "click") {
@@ -29,6 +30,8 @@ function handleInput(e){
     }
     if(e.type === "keyup") {
         value = e.key
+		if(value === "Enter") value = "="
+		if(value === "Escape" || value === "Backspace") value = "clear"
         target = document.querySelector(`[data-value="${value}"]`)
     }
 	makeActive(target)
