@@ -1,17 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta chrset="utf-8">	
-    
-      <title>Odin project - Calculator - Benji Plashkes</title>
-      <link rel="stylesheet" href="./css/style.css">
-      <script src="./js/scripts.js"></script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator - Benji Plashkes</title>
+  <script src="./js/scripts.js" defer></script>
+  <link rel="stylesheet" href="./css/style.css">
   </head>
-  <body>
-	<header>
-		<h1 class="hero-title">Calculator</h1>
-	</header>
-	
-  </body>
+<body>
+  <main>
+    <div class="calculator">
+      <div class="result">123456789</div>
+      <section class="input">
+        <div class="wrapper inputWrapper">
+          <button class="numberInput inputButton" data-value="1">1</button>
+          <button class="numberInput inputButton" data-value="2">2</button>
+          <button class="numberInput inputButton" data-value="3">3</button>
+          <button class="numberInput inputButton" data-value="4">4</button>
+          <button class="numberInput inputButton" data-value="5">5</button>
+          <button class="numberInput inputButton" data-value="6">6</button>
+          <button class="numberInput inputButton" data-value="7">7</button>
+          <button class="numberInput inputButton" data-value="8">8</button>
+          <button class="numberInput inputButton" data-value="9">9</button>
+          <button class="clearInput inputButton"  data-value="clear">CL</button>
+          <button class="numberInput inputButton" data-value="0">0</button>
+          <button class="equalInput inputButton"  data-value="=">=</button>
+        </div>
+        <div class="wrapper operatorWrapper">
+          <button class="operatorInput inputButton" data-value="+">+</button>
+          <button class="operatorInput inputButton" data-value="-">-</button>
+          <button class="operatorInput inputButton" data-value="*">*</button>
+          <button class="operatorInput inputButton" data-value="/">/</button>
+          <button class="operatorInput inputButton" data-value="**">**</button>
+        </div>  
+      </section>
 
+      
+    </div>
+  </main>
+</body>
 </html>

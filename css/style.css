@@ -1,0 +1,74 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+.body{
+    margin: 0 auto;
+    
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+}
+
+.calculator{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 500px;
+    border: 1px solid rgba(0,0,0,0.5);
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 0.25rem;
+
+}
+.result{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(100%);
+    padding: 1rem;
+    border: 1px solid rgba(0,0,0,0.5);
+    height: 50px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 0.25rem;
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+}
+.input{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 1rem auto;
+    gap: 1rem;
+}
+
+button{
+ 
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin: 0.125rem;  
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-style: normal; 
+    font-size: 2rem;
+    flex: 1 1 4rem;
+}
+.inputWrapper{
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 0.5rem;
+    height: 100%;
+}
+.operatorWrapper{
+    display: flex;
+    flex-wrap: wrap;
+
+}
