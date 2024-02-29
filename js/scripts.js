@@ -20,10 +20,19 @@ document.addEventListener("keyup", handleInput);
 // Click handler
 function handleInput(e){
     let value = ""
-    if(e.type === "click") value = e.target.dataset.value
-    if(e.type === "keyup") value = e.key
-	if (value === "=" || value === "Enter") return inputEqual();
-	if (value === "Escape" || value === "Backspace") return inputClear();
+    if(e.type === "click") {
+        makeActive(e.target)
+        value = e.target.dataset.value
+    }
+    if(e.type === "keyup") {
+        value = e.key
+        if(value === "Enter") value = "="
+        if(value === "Escape" || value === "Backspace") value = "clear"
+        target = document.querySelector(`[data-value="${value}"]`)
+        makeActive(target)
+    }
+	if (value === "=") return inputEqual();
+	if (value === "clear") return inputClear();
 	if (operators.includes(value)) return inputOperator(value);
 	if (value.match(/[0-9]/g)) return inputNumber(value);
 }
@@ -127,4 +136,8 @@ function renderDisplay(number) {
 }
 function clearDisplay() {
 	return (resultDiv.textContent = 0);
+}
+function makeActive(inputButton){
+    inputButtons.forEach(btn => btn.classList.remove('active'))
+    inputButton.classList.add('active')
 }

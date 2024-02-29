@@ -72,3 +72,6 @@ button{
     flex-wrap: wrap;
 
 }
+button.active{
+    border: 2px solid black;
+}
