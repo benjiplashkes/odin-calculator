@@ -12,6 +12,8 @@ let isFirstNumberEntered = false;
 
 // array of available operators
 const operators = ["+", "-", "*", "/", "**"];
+const enterKeys = ["Enter", "="]
+const clearKeys = ["clear", "Backspace", "Escape"]
 
 // Event Listeners
 inputButtons.forEach((btn) => btn.addEventListener("click", handleInput));
@@ -20,21 +22,20 @@ document.addEventListener("keyup", handleInput);
 // Click handler
 function handleInput(e){
     let value = ""
+    let target = ""
     if(e.type === "click") {
-        makeActive(e.target)
+        target = e.target
         value = e.target.dataset.value
     }
     if(e.type === "keyup") {
         value = e.key
-        if(value === "Enter") value = "="
-        if(value === "Escape" || value === "Backspace") value = "clear"
         target = document.querySelector(`[data-value="${value}"]`)
-        makeActive(target)
     }
-	if (value === "=") return inputEqual();
-	if (value === "clear") return inputClear();
+    if(!validateInput(value)) return
+    if (enterKeys.includes(value)) return inputEqual();
+	if (clearKeys.includes(value)) return inputClear();
 	if (operators.includes(value)) return inputOperator(value);
-	if (value.match(/[0-9]/g)) return inputNumber(value);
+	if (value.match(/[0-9]/)) return inputNumber(value);
 }
 // Input functions
 function inputEqual() {
@@ -58,6 +59,7 @@ function inputEqual() {
 	enteredOperator = "+";
 
 	// update display
+    resultDiv.dataset.operator = "="
 	clearDisplay();
 	renderDisplay(result);
 }
@@ -74,11 +76,12 @@ function inputClear() {
 	clearDisplay();
 }
 function inputOperator(value) {
-	enteredOperator = value;
+    enteredOperator = value;
 	isFirstNumberEntered = true;
 	if (secondEnteredNumber !== 0) {
-		inputEqual();
+        inputEqual();
 	}
+    resultDiv.dataset.operator = value
 	// clearDisplay()
 }
 function inputNumber(value) {
@@ -140,4 +143,12 @@ function clearDisplay() {
 function makeActive(inputButton){
     inputButtons.forEach(btn => btn.classList.remove('active'))
     inputButton.classList.add('active')
+}
+
+function validateInput(value){
+    if(value.match(/[0-9]/g)) return true
+    if(operators.includes(value)) return true
+    if(value === "=" || value === "Enter") return true
+    if(value === "clear" || value === "Backspace" || value === "Escape") return true
+    return false
 }
