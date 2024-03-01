@@ -128,6 +128,11 @@ function operate(number1, number2, operator) {
 			result = multiply(number1, number2);
 			break;
 		case "/":
+			if(number2 === 0) {
+				result = "Hahaha, very funny ☻"
+				setTimeout(inputClear, 1000)
+				break;
+			}
 			result = divide(number1, number2);
 			break;
 		case "**":
