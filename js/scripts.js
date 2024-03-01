@@ -47,7 +47,10 @@ function handleInput(e){
 			renderDisplay(firstEnteredNumber)
 		}
 		else {
-			secondEnteredNumber = secondEnteredNumber.slice(0, secondEnteredNumber.length -1)
+			if(secondEnteredNumber !== 0){
+				secondEnteredNumber = secondEnteredNumber.slice(0, secondEnteredNumber.length -1)
+				renderDisplay(secondEnteredNumber)
+			}
 			renderDisplay(secondEnteredNumber)
 		}
 	}
