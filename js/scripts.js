@@ -12,63 +12,72 @@ let isFirstNumberEntered = false;
 
 // array of available operators
 const operators = ["+", "-", "*", "/", "**"];
-const enterKeys = ["Enter", "="]
-const clearKeys = ["clear", "Backspace", "Escape"]
+const enterKeys = ["Enter", "="];
+const clearKeys = ["clear", "Backspace", "Escape"];
 
 // Event Listeners
 inputButtons.forEach((btn) => btn.addEventListener("click", handleInput));
 document.addEventListener("keyup", handleInput);
 
 // Click handler
-function handleInput(e){
-    let value = ""
-    let target = ""
-    if(e.type === "click") {
-        target = e.target
-        value = e.target.dataset.value
-    }
-    if(e.type === "keyup") {
-        value = e.key
-		if(value === "Enter") value = "="
-		if(value === "Escape") value = "clear"
-		if(value === "Backspace" || value === "Delete") value = "bs"
-        target = document.querySelector(`[data-value="${value}"]`)
-    }
-    if(!validateInput(value)) return
-	makeActive(target)
-    if (enterKeys.includes(value)) return inputEqual();
+function handleInput(e) {
+	let value = "";
+	let target = "";
+	if (e.type === "click") {
+		target = e.target;
+		value = e.target.dataset.value;
+	}
+	if (e.type === "keyup") {
+		value = e.key;
+		if (value === "Enter") value = "=";
+		if (value === "Escape") value = "clear";
+		if (value === "Backspace" || value === "Delete") value = "bs";
+		target = document.querySelector(`[data-value="${value}"]`);
+	}
+	if (!validateInput(value)) return;
+	makeActive(target);
+	if (enterKeys.includes(value)) return inputEqual();
 	if (clearKeys.includes(value)) return inputClear();
 	if (operators.includes(value)) return inputOperator(value);
 	if (value.match(/[0-9]/)) return inputNumber(value);
 	if (value === "bs") {
-		if(!isFirstNumberEntered){
-			
-			firstEnteredNumber = firstEnteredNumber.slice(0, firstEnteredNumber.length -1)
-			renderDisplay(firstEnteredNumber)
-		}
-		else {
-			if(secondEnteredNumber !== 0){
-				secondEnteredNumber = secondEnteredNumber.slice(0, secondEnteredNumber.length -1)
-				renderDisplay(secondEnteredNumber)
+		if (!isFirstNumberEntered) {
+			firstEnteredNumber = firstEnteredNumber.slice(
+				0,
+				firstEnteredNumber.length - 1
+			);
+			renderDisplay(firstEnteredNumber);
+		} else {
+			if (secondEnteredNumber !== 0) {
+				secondEnteredNumber = secondEnteredNumber.slice(
+					0,
+					secondEnteredNumber.length - 1
+				);
+				renderDisplay(secondEnteredNumber);
 			}
-			renderDisplay(secondEnteredNumber)
+			renderDisplay(secondEnteredNumber);
 		}
 	}
+	if (
+		value === "." &&
+		(!firstEnteredNumber.includes(".") ||
+			!secondEnteredNumber.includes("."))
+	)
+		return inputNumber(value);
 }
 // Input functions
 function inputEqual() {
-	let result = firstEnteredNumber
-	
+	let result = firstEnteredNumber;
+
 	//calculate new result
-	if(isFirstNumberEntered && enteredOperator && secondEnteredNumber){
+	if (isFirstNumberEntered && enteredOperator && secondEnteredNumber) {
 		result = operate(
 			firstEnteredNumber,
 			secondEnteredNumber,
 			enteredOperator
 		);
-	
 	}
-	
+
 	// save last given result
 	lastResult = resultVar;
 
@@ -82,10 +91,9 @@ function inputEqual() {
 	enteredOperator = "+";
 
 	// update display
-    resultDiv.dataset.operator = "="
+	resultDiv.dataset.operator = "=";
 	clearDisplay();
 	renderDisplay(result);
-
 }
 function inputClear() {
 	//reset results
@@ -100,12 +108,12 @@ function inputClear() {
 	clearDisplay();
 }
 function inputOperator(value) {
-    enteredOperator = value;
+	enteredOperator = value;
 	isFirstNumberEntered = true;
 	if (secondEnteredNumber !== 0) {
-        inputEqual();
+		inputEqual();
 	}
-    resultDiv.dataset.operator = value
+	resultDiv.dataset.operator = value;
 	// clearDisplay()
 }
 function inputNumber(value) {
@@ -148,9 +156,9 @@ function operate(number1, number2, operator) {
 			result = multiply(number1, number2);
 			break;
 		case "/":
-			if(number2 === 0) {
-				result = "Hahaha, very funny ☻"
-				setTimeout(inputClear, 1000)
+			if (number2 === 0) {
+				result = "Hahaha, very funny ☻";
+				setTimeout(inputClear, 1000);
 				break;
 			}
 			result = divide(number1, number2);
@@ -164,40 +172,56 @@ function operate(number1, number2, operator) {
 
 // Manage display
 function renderDisplay(number) {
-	number = Number(number)
-	number = Number.isInteger(number) ? number : number.toFixed(3)
-	return resultDiv.textContent = number
-	
+	number = Number(number);
+	number = Number.isInteger(number) ? number : number.toFixed(3);
+	return (resultDiv.textContent = number);
 }
 function clearDisplay() {
 	return (resultDiv.textContent = 0);
 }
-function makeActive(inputButton){
-    inputButtons.forEach(btn => btn.classList.remove('active'))
-    inputButton.classList.add('active')
+function makeActive(inputButton) {
+	inputButtons.forEach((btn) => btn.classList.remove("active"));
+	inputButton.classList.add("active");
 }
 
-function validateInput(value){
-    if(value.match(/[0-9]/g)) return true
-    if(operators.includes(value)) return true
-    if(value === "=" || value === "Enter") return true
-    if(value === "clear" || value === "Backspace" || value === "Escape") return true
-	if(value === "bs") return true
-    return false
+function validateInput(value) {
+	// Validate numbers
+	if (value.match(/[0-9]/g)) return true;
+
+	//Validate operators
+	if (operators.includes(value)) return true;
+
+	// Validate other inputs
+	const otherPossibleInputs = [
+		"=",
+		"Enter",
+		"clear",
+		"Backspace",
+		"Escape",
+		"bs",
+		".",
+	];
+	if (otherPossibleInputs.includes(value)) return true;
+
+	// If none validated
+	return false;
 }
 
-function randomizeColor(){
-    const rndVal = ()=> Math.floor(Math.random() * 220) 
-	const r = rndVal()
-	const g = rndVal()
-	const b = rndVal()
-	const color = `${r}, ${g}, ${b}`
-	const element = document.querySelector(':root')
-	console.log("before: ", getComputedStyle(element).getPropertyValue('--color-main'))
-	element.style.setProperty('--color-main', `rgb(${color})`)
-	console.log("after: ", getComputedStyle(element).getPropertyValue('--color-main'))
-
-
-   
+function randomizeColor() {
+	const rndVal = () => Math.floor(Math.random() * 220);
+	const r = rndVal();
+	const g = rndVal();
+	const b = rndVal();
+	const color = `${r}, ${g}, ${b}`;
+	const element = document.querySelector(":root");
+	console.log(
+		"before: ",
+		getComputedStyle(element).getPropertyValue("--color-main")
+	);
+	element.style.setProperty("--color-main", `rgb(${color})`);
+	console.log(
+		"after: ",
+		getComputedStyle(element).getPropertyValue("--color-main")
+	);
 }
-randomizeColor()
+randomizeColor();
