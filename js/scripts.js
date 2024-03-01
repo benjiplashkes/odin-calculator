@@ -161,8 +161,10 @@ function operate(number1, number2, operator) {
 
 // Manage display
 function renderDisplay(number) {
-	if(!Number.isInteger(number)) return (resultDiv.textContent = number.toFixed(3))
-	return (resultDiv.textContent = number);
+	number = Number(number)
+	number = Number.isInteger(number) ? number : number.toFixed(3)
+	return resultDiv.textContent = number
+	
 }
 function clearDisplay() {
 	return (resultDiv.textContent = 0);
