@@ -43,13 +43,18 @@ function handleInput(e){
 }
 // Input functions
 function inputEqual() {
+	let result = firstEnteredNumber
+	
 	//calculate new result
-	const result = operate(
-		firstEnteredNumber,
-		secondEnteredNumber,
-		enteredOperator
-	);
-
+	if(isFirstNumberEntered && enteredOperator && secondEnteredNumber){
+		result = operate(
+			firstEnteredNumber,
+			secondEnteredNumber,
+			enteredOperator
+		);
+	
+	}
+	
 	// save last given result
 	lastResult = resultVar;
 
