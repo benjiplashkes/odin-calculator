@@ -21,7 +21,6 @@ document.addEventListener("keyup", handleInput);
 
 // Click handler
 function handleInput(e){
-	console.log(e)
     let value = ""
     let target = ""
     if(e.type === "click") {
