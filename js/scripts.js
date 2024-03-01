@@ -69,7 +69,7 @@ function inputEqual() {
 	// update display
     resultDiv.dataset.operator = "="
 	clearDisplay();
-	renderDisplay(result);
+	renderDisplay(result.toFixed(3));
 }
 function inputClear() {
 	//reset results
