@@ -34,8 +34,8 @@ function handleInput(e){
 		if(value === "Escape" || value === "Backspace") value = "clear"
         target = document.querySelector(`[data-value="${value}"]`)
     }
-	makeActive(target)
     if(!validateInput(value)) return
+	makeActive(target)
     if (enterKeys.includes(value)) return inputEqual();
 	if (clearKeys.includes(value)) return inputClear();
 	if (operators.includes(value)) return inputOperator(value);
