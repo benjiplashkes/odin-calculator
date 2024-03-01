@@ -39,7 +39,7 @@ function handleInput(e) {
 	if (enterKeys.includes(value)) return inputEqual();
 	if (clearKeys.includes(value)) return inputClear();
 	if (operators.includes(value)) return inputOperator(value);
-	if (value.match(/[0-9]/)) return inputNumber(value);
+	if (value.match(/[0-9]/) || ".") return inputNumber(value);
 	if (value === "bs") {
 		if (!isFirstNumberEntered) {
 			firstEnteredNumber = firstEnteredNumber.slice(
@@ -58,12 +58,8 @@ function handleInput(e) {
 			renderDisplay(secondEnteredNumber);
 		}
 	}
-	if (
-		value === "." &&
-		(!firstEnteredNumber.includes(".") ||
-			!secondEnteredNumber.includes("."))
-	)
-		return inputNumber(value);
+
+
 }
 // Input functions
 function inputEqual() {
@@ -118,6 +114,9 @@ function inputOperator(value) {
 }
 function inputNumber(value) {
 	console.log("number: ", value);
+	if(value === "."){
+		if(!firstEnteredNumber && firstEnteredNumber === "0") firstEnteredNumber = "0."
+	}
 	if (!isFirstNumberEntered) {
 		firstEnteredNumber === 0
 			? (firstEnteredNumber = value)
@@ -172,9 +171,11 @@ function operate(number1, number2, operator) {
 
 // Manage display
 function renderDisplay(number) {
+	if(number === "0." || number ===".") return resultDiv.textContent = "0."
 	number = Number(number);
 	number = Number.isInteger(number) ? number : number.toFixed(3);
 	return (resultDiv.textContent = number);
+	
 }
 function clearDisplay() {
 	return (resultDiv.textContent = 0);
