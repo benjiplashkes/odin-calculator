@@ -81,7 +81,8 @@ function inputEqual() {
 	// update display
     resultDiv.dataset.operator = "="
 	clearDisplay();
-	renderDisplay(result.toFixed(3));
+	renderDisplay(result);
+
 }
 function inputClear() {
 	//reset results
@@ -160,6 +161,7 @@ function operate(number1, number2, operator) {
 
 // Manage display
 function renderDisplay(number) {
+	if(!Number.isInteger(number)) return (resultDiv.textContent = number.toFixed(3))
 	return (resultDiv.textContent = number);
 }
 function clearDisplay() {
