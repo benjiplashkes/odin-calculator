@@ -30,7 +30,8 @@ function handleInput(e){
     if(e.type === "keyup") {
         value = e.key
 		if(value === "Enter") value = "="
-		if(value === "Escape" || value === "Backspace") value = "clear"
+		if(value === "Escape") value = "clear"
+		if(value === "Backspace" || value === "Delete") value = "bs"
         target = document.querySelector(`[data-value="${value}"]`)
     }
     if(!validateInput(value)) return
@@ -39,6 +40,17 @@ function handleInput(e){
 	if (clearKeys.includes(value)) return inputClear();
 	if (operators.includes(value)) return inputOperator(value);
 	if (value.match(/[0-9]/)) return inputNumber(value);
+	if (value === "bs") {
+		if(!isFirstNumberEntered){
+			
+			firstEnteredNumber = firstEnteredNumber.slice(0, firstEnteredNumber.length -1)
+			renderDisplay(firstEnteredNumber)
+		}
+		else {
+			secondEnteredNumber = secondEnteredNumber.slice(0, secondEnteredNumber.length -1)
+			renderDisplay(secondEnteredNumber)
+		}
+	}
 }
 // Input functions
 function inputEqual() {
@@ -163,6 +175,7 @@ function validateInput(value){
     if(operators.includes(value)) return true
     if(value === "=" || value === "Enter") return true
     if(value === "clear" || value === "Backspace" || value === "Escape") return true
+	if(value === "bs") return true
     return false
 }
 
