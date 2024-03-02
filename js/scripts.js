@@ -1,3 +1,4 @@
+
 // Cache elements
 const resultDiv = document.querySelector(".result");
 const inputButtons = document.querySelectorAll(".inputButton");
@@ -116,6 +117,9 @@ function inputNumber(value) {
 	console.log("number: ", value);
 	if(value === "."){
 		if(!firstEnteredNumber && firstEnteredNumber === "0") firstEnteredNumber = "0."
+		if(!isFirstNumberEntered && firstEnteredNumber.includes(".")) return
+		if(isFirstNumberEntered && secondEnteredNumber.includes(".")) return
+
 	}
 	if (!isFirstNumberEntered) {
 		firstEnteredNumber === 0
