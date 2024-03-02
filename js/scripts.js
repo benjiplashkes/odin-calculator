@@ -1,4 +1,3 @@
-
 // Cache elements
 const resultDiv = document.querySelector(".result");
 const inputButtons = document.querySelectorAll(".inputButton");
@@ -59,8 +58,6 @@ function handleInput(e) {
 			renderDisplay(secondEnteredNumber);
 		}
 	}
-
-
 }
 // Input functions
 function inputEqual() {
@@ -115,11 +112,14 @@ function inputOperator(value) {
 }
 function inputNumber(value) {
 	console.log("number: ", value);
-	if(value === "."){
-		if(!firstEnteredNumber && firstEnteredNumber === "0") firstEnteredNumber = "0."
-		if(!isFirstNumberEntered && firstEnteredNumber.includes(".")) return
-		if(isFirstNumberEntered && secondEnteredNumber.includes(".")) return
-
+	if (value === ".") {
+		if (
+			(!firstEnteredNumber && firstEnteredNumber === "0") ||
+			(!firstEnteredNumber && firstEnteredNumber === 0)
+		)
+			firstEnteredNumber = "0.";
+		if (!isFirstNumberEntered && firstEnteredNumber.includes(".")) return;
+		if (isFirstNumberEntered && secondEnteredNumber.includes(".")) return;
 	}
 	if (!isFirstNumberEntered) {
 		firstEnteredNumber === 0
@@ -175,11 +175,11 @@ function operate(number1, number2, operator) {
 
 // Manage display
 function renderDisplay(number) {
-	if(number === "0." || number ===".") return resultDiv.textContent = "0."
+	if (number === "0." || number === ".")
+		return (resultDiv.textContent = "0.");
 	number = Number(number);
 	number = Number.isInteger(number) ? number : number.toFixed(3);
 	return (resultDiv.textContent = number);
-	
 }
 function clearDisplay() {
 	return (resultDiv.textContent = 0);
@@ -213,20 +213,29 @@ function validateInput(value) {
 }
 
 function randomizeColor() {
-	const rndVal = () => Math.floor(Math.random() * 220);
-	const r = rndVal();
-	const g = rndVal();
-	const b = rndVal();
-	const color = `${r}, ${g}, ${b}`;
+	const rndVal = (max) => Math.floor(Math.random() * max);
+	const hue = rndVal(360);
+	const saturation = rndVal(100) + "%";
+	const lightness = rndVal(80) + "%";
+	const color = `${hue}, ${saturation}%, ${lightness}%`;
+	
+	const borderHue = 360 - hue > 0 ? 360 - hue : 0 + hue;
+
+	const gradientDeg = rndVal(360) + "deg";
+	const gradientPoint = rndVal(95) + "%";
+
+
 	const element = document.querySelector(":root");
-	console.log(
-		"before: ",
-		getComputedStyle(element).getPropertyValue("--color-main")
-	);
-	element.style.setProperty("--color-main", `rgb(${color})`);
-	console.log(
-		"after: ",
-		getComputedStyle(element).getPropertyValue("--color-main")
-	);
+
+	element.style.setProperty("--color-hue", hue);
+	element.style.setProperty("--color-saturation", saturation);
+	element.style.setProperty("--color-lightness", lightness);
+	
+
+	element.style.setProperty("--color-hue-border", borderHue);
+	element.style.setProperty("--gradient-deg", gradientDeg);
+	element.style.setProperty("--gradient-point", gradientPoint);
+
+
 }
 randomizeColor();
